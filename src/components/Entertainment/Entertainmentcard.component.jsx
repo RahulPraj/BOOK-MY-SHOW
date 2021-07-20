@@ -23,8 +23,8 @@ const EntertainmentCardSlider = () =>{
         "https://in.bmscdn.com/discovery-catalog/collections/tr:w-800,h-800:ote-MTUrIEV2ZW50cw%3D%3D,otc-FFFFFF,otf-Roboto,ots-64,ox-48,oy-320,ott-b:w-300/esports-collection-202011150107.png",
       ];
       const settings = {
-        Infinity: true,
-        autoplay: true,
+        Infinity: false,
+        autoplay: false,
         slidesToShow: 4,
         slidesToScroll: 4,
         InitialSlide: 0,

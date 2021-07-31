@@ -1,11 +1,34 @@
-import React from 'react';
+import axios from 'axios';
+import React,{useState, useEffect} from 'react';
 import PlaysFilter from '../components/PlaysFilter/PlaysFilters.component';
+
 
 //component
 import Poster from '../components/Poster/Poster.component';
 
 
 const Plays= () => {
+    const [tvPopular, setTvPopular] =useState ([]);
+    const [images,setImages] = useState([]);
+
+    useEffect( () => {
+        const requestNowPlayingShows = async () =>{
+             //ASYNC CALL
+            const getImages = await axios.get ("/tv/popular");
+            setImages(getImages.data.results);
+        };
+        requestNowPlayingShows();
+    }, []);
+    console.log(images);
+    useEffect(() =>{
+
+        const requestTvShows = async () => {
+            const getTvPopular = await axios.get("/tv/popular");
+            setTvPopular(getTvPopular.data.results);
+        };
+        requestTvShows(); 
+    },[]);
+   // console.log(tvPopular);
     return (
         <>
         <div className=" container mx-auto px-4">
@@ -14,26 +37,16 @@ const Plays= () => {
                 <h2 className="text-2xl font-bold mb-4">Plays in Delhi</h2>
             <div className="flex flex-wrap ">
                 <div className="w-1/2 md:w-1/3 lg:w-3/12 my-3">
-                    <Poster src="https://in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAyNSBKdWw%3D,ots-29,otc-FFFFFF,oy-612,ox-24/et00309696-fsqhgswrqc-portrait.jpg"
-                        title="`Kanthamathi` (Sadarame) Surabhi Theatre Play"
-                        subtitle="Telugu ₹400"/>
+                    {tvPopular && tvPopular.map((tvPopulardata) =>( // console.log(tvPopulardata.poster_path) &&
+                    <h1 style={{color:"black"}} key={tvPopulardata.id}>{tvPopular.original_name}</h1> 
+                   // <img src= {`https://image.tmdb.org/t/p/original/${tvPopulardata.poster_path}`} alt={tvPopulardata.original_name} /> 
+                       // <Poster image={`https://image.tmdb.org/t/p/original/${tvPopulardata.poster_path}`}
+                       // title={tvPopulardata.original_name}    />
+                    ))}
+                    
+                    
                     </div>
-                    <div className="w-1/2  md:w-1/3  lg:w-3/12 my-3">
-                    <Poster src="https://in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAyNSBKdWw%3D,ots-29,otc-FFFFFF,oy-612,ox-24/et00309696-fsqhgswrqc-portrait.jpg"
-                        title="`Kanthamathi` (Sadarame) Surabhi Theatre Play"
-                        subtitle="Telugu ₹400"/>
-                    </div>
-                    <div className="w-1/2 md:w-1/3  lg:w-3/12 my-3">
-                    <Poster src="https://in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAyNSBKdWw%3D,ots-29,otc-FFFFFF,oy-612,ox-24/et00309696-fsqhgswrqc-portrait.jpg"
-                        title="`Kanthamathi` (Sadarame) Surabhi Theatre Play"
-                        subtitle="Telugu ₹400"/>
-                    </div>
-                    <div className="w-1/2 md:w-1/3  lg:w-3/12 my-3">
-                    <Poster src="https://in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAyNSBKdWw%3D,ots-29,otc-FFFFFF,oy-612,ox-24/et00309696-fsqhgswrqc-portrait.jpg"
-                        title="`Kanthamathi` (Sadarame) Surabhi Theatre Play"
-                        subtitle="Telugu ₹400"/>
-                    </div>
-                </div>
+                 </div>   
              </div>
                
                 <div className="lg:w-3/12">

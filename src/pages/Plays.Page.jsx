@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React,{useState, useEffect} from 'react';
-import PlaysFilter from '../components/PlaysFilter/PlaysFilters.component';
+import PlaysCarousal from '../components/plays/PlaysCarousal.component';
+import PlaysFilter from '../components/PlaysFilter/PlaysFilters.component'
 
 
 //component
@@ -16,6 +17,7 @@ const Plays= () => {
              //ASYNC CALL
             const getImages = await axios.get ("/tv/popular");
             setImages(getImages.data.results);
+            console.log(getImages.data.results);
         };
         requestNowPlayingShows();
     }, []);
@@ -32,17 +34,22 @@ const Plays= () => {
     return (
         <>
         <div className=" container mx-auto px-4">
+        <PlaysCarousal images={images} setImages={setImages}/>
             <div className="w-full lg:flex lg:flex-row-reverse"> 
              <div className="lg:w-3/4">
+                 
                 <h2 className="text-2xl font-bold mb-4">Plays in Delhi</h2>
             <div className="flex flex-wrap ">
-                <div className="w-1/2 md:w-1/3 lg:w-3/12 my-3">
-                    {tvPopular && tvPopular.map((tvPopulardata) =>( // console.log(tvPopulardata.poster_path) &&
-                    <h1 style={{color:"black"}} key={tvPopulardata.id}>{tvPopular.original_name}</h1> 
-                   // <img src= {`https://image.tmdb.org/t/p/original/${tvPopulardata.poster_path}`} alt={tvPopulardata.original_name} /> 
-                       // <Poster image={`https://image.tmdb.org/t/p/original/${tvPopulardata.poster_path}`}
-                       // title={tvPopulardata.original_name}    />
-                    ))}
+                <div className=" flex mx-4 my-3 ">
+                    {tvPopular && tvPopular.map((tvPopulardata) => {
+                        return <div className="flex w-40 h-40">
+                            
+                          <img src= {`https://image.tmdb.org/t/p/original/${tvPopulardata.poster_path}`} alt={tvPopulardata.original_name} /> 
+                        
+                        
+                        </div>
+                    
+                    })}
                     
                     
                     </div>
